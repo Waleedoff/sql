@@ -1,0 +1,92 @@
+create database store;
+
+# ==> DDL ( DATA DIFINTION LANGAUGE)
+use store;
+create table countries(
+    code int primary key,
+    namee varchar(20) not null unique,
+    continent_name varchar(20) not null
+    
+);
+
+use store;
+create table users(
+    id int primary key,
+    full_name varchar(20),
+    email varchar(20) unique,
+    gender char(1) check(gender="M" or "F"),
+    date_of_birth varchar(15),
+    created_at datetime,
+    country_code int,
+    foreign key(country_code) references countries(code)
+
+);
+
+use store;
+create table orders(
+   id int primary key,
+   user_id int,
+   statuss varchar(6) check(statuss="start" or statuss="finish"),
+   created_at datetime,
+   foreign key (user_id) references countries(id)
+
+
+);
+
+use store;
+create table order_product(
+   order_id int,
+   product_id int primary key,
+   quantity int default 0,
+   primary key(order_id,product_id),
+   foreign key(order_id) references orders(id),
+   foreign key(product_id) references products(id)
+
+);
+
+#STORE TABLE
+use store;
+create table product(
+  id int primary key,
+  name varchar(10) not null,
+  price int default 0,
+  statusss varchar(10) check(statusss="valid" or "expired"),
+  created_of datetime
+
+);
+
+
+# ==> DML ( DATA MANIPULATION LANGAUGE)
+
+#ADD ROW TO COUNTRIES.
+use store;
+insert into countries value(1,"waled","Asia");
+
+#ADD ROW TO USERS.
+use store;
+insert into users value(1,'waled','wal98@hotmail.com','M','1997','3','1');
+
+#ADD ROW TO ORDER. 
+insert into users value('1','2','finish','2021-04-01',2);
+
+
+
+#ADD ROW TO PRODCUT
+use store;
+insert into product value('3','fox','5','expired',3);
+
+
+
+#ADD ROW TO ORDER_PRODUCT.
+insert into order_product value('3','4','2');
+
+
+
+
+#UPDATE ROW FROM COUNTRIES TABLE.
+use store;
+update countries set   continent_name = 'africa' where namee ="waled";
+
+#DELETE ROW FROM PODUCTS TABLE.
+delete from product where  id = '2';
+
